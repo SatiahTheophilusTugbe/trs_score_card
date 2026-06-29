@@ -1,4 +1,71 @@
 <!DOCTYPE html>
+<!--
+  ============================================================
+  TRS SCORE CARD GRAPHIC — PRODUCTION TEMPLATE
+  ============================================================
+  Build Version : v5.0
+  Build Date    : 2026-06-28
+  Author        : Third Rail Sports / Claude (Anthropic)
+  Repo          : https://github.com/SatiahTheophilusTugbe/trs_score_card
+  ============================================================
+  CHANGELOG
+  v5.0 (2026-06-28)
+    - Final locked design approved for production
+    - Full canvas centering via flex column between topbar & footer
+    - Eyebrow: THIRD RAIL SPORTS (volt left) + FIFA WORLD CUP 2026 (muted right)
+    - Match context line (STAGE · GROUP · MD) floats above score
+    - Score numerals 290px Bebas — winner in volt #AAFF00, loser dimmed
+    - Winner team code full white, loser dimmed to 45% opacity
+    - Winner badge: volt bg, dark text, Bebas
+    - Goal scorers: home left-aligned, away right-aligned, volt minutes
+    - Stats: xG / Shots on Target / Possession with volt+red progress bars
+    - TRS Verdict: volt border-top rule, 36px Inter body
+    - Color bleeds: winner dominant diagonal top-left, loser subtle radial bottom-right
+    - Footer pinned: @THIRDRAILSPORTS · SPORT. DECODED.
+    - Viewport: 1080×1920 (hcti.io render target)
+
+  v4.0 — Eyebrow restructure (3-column layout, circle emblem removed)
+  v3.0 — Verdict font size increase
+  v2.0 — Full canvas centering, type scale increase, color bleed logic
+  v1.0 — Initial build
+
+  ============================================================
+  PLACEHOLDER TOKENS (injected by n8n Build Score Card HTML node)
+  ============================================================
+  {{WIN_COLOR_RGBA_HIGH}}   Winner team color at 55% opacity (linear-gradient start)
+  {{WIN_COLOR_RGBA_LOW}}    Winner team color at 20% opacity (linear-gradient mid)
+  {{LOSE_COLOR_RGBA}}       Loser team color at 22% opacity (radial wash)
+  {{STAGE_LABEL}}           e.g. GROUP STAGE / ROUND OF 16 / FINAL
+  {{GROUP_LABEL}}           e.g. GROUP A (empty for knockout rounds)
+  {{MATCHDAY}}              e.g. 2
+  {{HOME_CREST}}            URL to home team crest image
+  {{HOME_CODE}}             e.g. ARG
+  {{HOME_TEAM}}             e.g. Argentina
+  {{HOME_WIN_CLASS}}        "winner" or "loser" (CSS class)
+  {{HOME_SCORE_CLASS}}      "winner" or "loser" (CSS class)
+  {{HOME_SCORE}}            Final score integer
+  {{AWAY_CREST}}            URL to away team crest image
+  {{AWAY_CODE}}             e.g. BRA
+  {{AWAY_TEAM}}             e.g. Brazil
+  {{AWAY_WIN_CLASS}}        "winner" or "loser" (CSS class)
+  {{AWAY_SCORE_CLASS}}      "winner" or "loser" (CSS class)
+  {{AWAY_SCORE}}            Final score integer
+  {{WINNER_LABEL}}          e.g. ARGENTINA WIN / DRAW
+  {{GOALS_HOME_HTML}}       Pre-built HTML: <div class="goal-line">...</div> blocks
+  {{GOALS_AWAY_HTML}}       Pre-built HTML: <div class="goal-line">...</div> blocks
+  {{XG_HOME}}               e.g. 2.4
+  {{XG_AWAY}}               e.g. 1.1
+  {{XG_HOME_PCT}}           Bar width percentage (home share of total xG)
+  {{XG_AWAY_PCT}}           Bar width percentage (away share of total xG)
+  {{SHOTS_HOME}}            Integer
+  {{SHOTS_AWAY}}            Integer
+  {{SHOTS_HOME_PCT}}        Bar width percentage
+  {{SHOTS_AWAY_PCT}}        Bar width percentage
+  {{POSSESSION_HOME}}       Integer (e.g. 58)
+  {{POSSESSION_AWAY}}       Integer (e.g. 42)
+  {{VERDICT}}               AI-generated single sentence, TRS editorial voice
+  ============================================================
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,8 +73,10 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
 
+  /* ── Reset ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  /* ── Canvas ── */
   body {
     width: 1080px;
     height: 1920px;
@@ -17,26 +86,36 @@
     position: relative;
   }
 
-  /* ── Color bleeds ── */
+  /* ── Color bleeds ──
+     Winner: dominant diagonal from top-left
+     Loser:  subtle radial wash bottom-right
+     Colors injected at render time from team hex values */
   .bleed-win {
     position: absolute; inset: 0;
-    background: linear-gradient(140deg, {{WIN_COLOR_RGBA_HIGH}} 0%, {{WIN_COLOR_RGBA_LOW}} 38%, transparent 60%);
+    background: linear-gradient(140deg,
+      {{WIN_COLOR_RGBA_HIGH}} 0%,
+      {{WIN_COLOR_RGBA_LOW}}  38%,
+      transparent             60%);
     z-index: 0;
   }
   .bleed-lose {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 90% 95%, {{LOSE_COLOR_RGBA}} 0%, transparent 52%);
+    background: radial-gradient(ellipse at 90% 95%,
+      {{LOSE_COLOR_RGBA}} 0%,
+      transparent         52%);
     z-index: 0;
   }
 
-  /* ── Top eyebrow bar ── */
+  /* ── Eyebrow bar (top, pinned) ──
+     Left:  THIRD RAIL SPORTS in volt
+     Right: FIFA WORLD CUP 2026 in muted white
+     No center element — match context lives inside .content */
   .topbar {
     position: absolute; top: 0; left: 0; right: 0;
     z-index: 3;
     display: flex; justify-content: space-between; align-items: center;
     padding: 48px 48px 0;
   }
-
   .eyebrow-left {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px;
@@ -44,19 +123,19 @@
     letter-spacing: 6px;
     white-space: nowrap;
   }
-
   .eyebrow-right {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.40);
     letter-spacing: 3px;
     white-space: nowrap;
     text-align: right;
   }
 
-  /* ── Footer ── */
+  /* ── Footer (bottom, pinned) ── */
   .footer {
-    position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+    position: absolute; bottom: 0; left: 0; right: 0;
+    z-index: 3;
     padding: 28px 48px;
     border-top: 1.5px solid rgba(255,255,255,0.07);
     display: flex; justify-content: center; align-items: center;
@@ -69,7 +148,9 @@
   }
   .footer-dot { color: #AAFF00; margin: 0 14px; }
 
-  /* ── Main content column — centered between topbar & footer ── */
+  /* ── Main content column ──
+     Occupies space between topbar (148px) and footer (102px)
+     flex column, centered vertically and horizontally */
   .content {
     position: absolute;
     top: 148px; bottom: 102px;
@@ -78,10 +159,11 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 0 60px;
-    gap: 0;
   }
 
-  /* Match context line */
+  /* ── Match context line ──
+     GROUP STAGE · GROUP A · MD2
+     Sits above score with clear breathing room */
   .match-context {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 36px;
@@ -98,8 +180,14 @@
     margin-bottom: 24px;
   }
 
-  .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  /* Team column — crest, code, name */
+  .team {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 22px;
+  }
 
+  /* Team crest circle */
   .crest {
     width: 168px; height: 168px;
     border-radius: 50%;
@@ -107,8 +195,13 @@
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
   }
-  .crest img { width: 130px; height: 130px; object-fit: contain; }
+  .crest img {
+    width: 130px; height: 130px;
+    object-fit: contain;
+  }
 
+  /* Team 3-letter code
+     .winner = full white  |  .loser = dimmed */
   .team-code {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 80px; letter-spacing: 8px;
@@ -117,6 +210,7 @@
   .team-code.winner { color: #ffffff; }
   .team-code.loser  { color: rgba(255,255,255,0.45); }
 
+  /* Full team name (below code) */
   .team-name {
     font-size: 26px; font-weight: 500;
     color: rgba(255,255,255,0.35);
@@ -124,15 +218,19 @@
     text-align: center;
   }
 
-  .score-center { display: flex; align-items: center; padding: 0 28px; }
-
+  /* Score numerals + separator */
+  .score-center {
+    display: flex; align-items: center;
+    padding: 0 28px;
+  }
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 290px; line-height: 1;
     min-width: 160px; text-align: center;
   }
+  /* Winner score = volt, loser score = dimmed */
   .score-num.winner { color: #AAFF00; }
-  .score-num.loser  { color: rgba(255,255,255,0.4); }
+  .score-num.loser  { color: rgba(255,255,255,0.40); }
 
   .score-sep {
     font-family: 'Bebas Neue', sans-serif;
@@ -141,7 +239,9 @@
     padding: 0 10px;
   }
 
-  /* ── Winner badge ── */
+  /* ── Winner badge ──
+     Volt background, dark text, Bebas
+     ARGENTINA WIN / DRAW etc. */
   .winner-badge {
     background: #AAFF00; color: #080906;
     font-family: 'Bebas Neue', sans-serif;
@@ -150,49 +250,59 @@
     margin-bottom: 52px;
   }
 
-  /* ── Goal scorers ── */
+  /* ── Goal scorers ──
+     Home: left-aligned  |  Away: right-aligned
+     Volt minute numbers */
   .goals {
-    width: 100%; display: flex; justify-content: space-between;
+    width: 100%;
+    display: flex; justify-content: space-between;
     margin-bottom: 56px;
     min-height: 88px;
   }
-  .goals-col { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .goals-col {
+    flex: 1;
+    display: flex; flex-direction: column; gap: 12px;
+  }
   .goals-col.left  { align-items: flex-start; }
   .goals-col.right { align-items: flex-end; }
 
   .goal-line {
     font-size: 28px; font-weight: 400;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.60);
     line-height: 1.4;
   }
   .goal-min { color: #AAFF00; font-weight: 700; }
 
-  /* ── Divider ── */
+  /* ── Section divider ── */
   .divider {
     width: 100%; height: 1.5px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.10);
     margin-bottom: 52px;
   }
 
-  /* ── Stats ── */
-  .stats { width: 100%; display: flex; flex-direction: column; gap: 36px; margin-bottom: 56px; }
-
+  /* ── Stats block ──
+     xG / Shots on Target / Possession
+     Volt bar = home  |  Dark red bar = away */
+  .stats {
+    width: 100%;
+    display: flex; flex-direction: column; gap: 36px;
+    margin-bottom: 56px;
+  }
   .stat-row { display: flex; flex-direction: column; gap: 10px; }
-  .stat-labels { display: flex; justify-content: space-between; align-items: center; }
-
+  .stat-labels {
+    display: flex; justify-content: space-between; align-items: center;
+  }
   .stat-val {
     font-size: 36px; font-weight: 700;
-    color: #fff; min-width: 72px;
+    color: #ffffff; min-width: 72px;
   }
   .stat-val.right { text-align: right; }
-
   .stat-name {
     font-size: 22px; font-weight: 600;
     color: rgba(255,255,255,0.32);
     letter-spacing: 4px; text-transform: uppercase;
     text-align: center;
   }
-
   .bar-track {
     height: 8px;
     background: rgba(255,255,255,0.07);
@@ -208,10 +318,12 @@
     border-radius: 0 4px 4px 0;
   }
 
-  /* ── Verdict ── */
+  /* ── TRS Verdict block ──
+     Volt top-border rule, label, 36px Inter body
+     AI-generated single sentence in TRS editorial voice */
   .verdict {
     width: 100%;
-    border-top: 2.5px solid rgba(170,255,0,0.3);
+    border-top: 2.5px solid rgba(170,255,0,0.30);
     padding-top: 36px;
   }
   .verdict-label {
@@ -230,26 +342,32 @@
 </head>
 <body>
 
-  <!-- Color bleeds -->
+  <!-- Winner dominant diagonal bleed (top-left) -->
   <div class="bleed-win"></div>
+
+  <!-- Loser subtle radial wash (bottom-right) -->
   <div class="bleed-lose"></div>
 
-  <!-- Eyebrow bar -->
+  <!-- ── Eyebrow bar ── -->
   <div class="topbar">
     <div class="eyebrow-left">THIRD RAIL SPORTS</div>
     <div class="eyebrow-right">FIFA WORLD CUP 2026</div>
   </div>
 
-  <!-- Main centered content -->
+  <!-- ── Main centered content ── -->
   <div class="content">
 
-    <!-- Match context -->
-    <div class="match-context">{{STAGE_LABEL}} &nbsp;·&nbsp; {{GROUP_LABEL}} &nbsp;·&nbsp; MD{{MATCHDAY}}</div>
+    <!-- Match context: STAGE · GROUP · MD -->
+    <div class="match-context">
+      {{STAGE_LABEL}} &nbsp;·&nbsp; {{GROUP_LABEL}} &nbsp;·&nbsp; MD{{MATCHDAY}}
+    </div>
 
-    <!-- Score -->
+    <!-- Score row: crest / code / name — score — crest / code / name -->
     <div class="score-section">
       <div class="team">
-        <div class="crest"><img src="{{HOME_CREST}}" alt="{{HOME_CODE}}"></div>
+        <div class="crest">
+          <img src="{{HOME_CREST}}" alt="{{HOME_CODE}}">
+        </div>
         <div class="team-code {{HOME_WIN_CLASS}}">{{HOME_CODE}}</div>
         <div class="team-name">{{HOME_TEAM}}</div>
       </div>
@@ -259,7 +377,9 @@
         <div class="score-num {{AWAY_SCORE_CLASS}}">{{AWAY_SCORE}}</div>
       </div>
       <div class="team">
-        <div class="crest"><img src="{{AWAY_CREST}}" alt="{{AWAY_CODE}}"></div>
+        <div class="crest">
+          <img src="{{AWAY_CREST}}" alt="{{AWAY_CODE}}">
+        </div>
         <div class="team-code {{AWAY_WIN_CLASS}}">{{AWAY_CODE}}</div>
         <div class="team-name">{{AWAY_TEAM}}</div>
       </div>
@@ -274,11 +394,12 @@
       <div class="goals-col right">{{GOALS_AWAY_HTML}}</div>
     </div>
 
-    <!-- Divider -->
+    <!-- Stats divider -->
     <div class="divider"></div>
 
-    <!-- Stats -->
+    <!-- Stats: xG / Shots on Target / Possession -->
     <div class="stats">
+
       <div class="stat-row">
         <div class="stat-labels">
           <span class="stat-val">{{XG_HOME}}</span>
@@ -290,6 +411,7 @@
           <div class="bar-away" style="width:{{XG_AWAY_PCT}}%;"></div>
         </div>
       </div>
+
       <div class="stat-row">
         <div class="stat-labels">
           <span class="stat-val">{{SHOTS_HOME}}</span>
@@ -301,6 +423,7 @@
           <div class="bar-away" style="width:{{SHOTS_AWAY_PCT}}%;"></div>
         </div>
       </div>
+
       <div class="stat-row">
         <div class="stat-labels">
           <span class="stat-val">{{POSSESSION_HOME}}%</span>
@@ -312,6 +435,7 @@
           <div class="bar-away" style="width:{{POSSESSION_AWAY}}%;"></div>
         </div>
       </div>
+
     </div>
 
     <!-- TRS Verdict -->
@@ -322,9 +446,11 @@
 
   </div>
 
-  <!-- Footer -->
+  <!-- ── Footer ── -->
   <div class="footer">
-    <span class="footer-text">@THIRDRAILSPORTS<span class="footer-dot">·</span>SPORT. DECODED.</span>
+    <span class="footer-text">
+      @THIRDRAILSPORTS<span class="footer-dot">·</span>SPORT. DECODED.
+    </span>
   </div>
 
 </body>
