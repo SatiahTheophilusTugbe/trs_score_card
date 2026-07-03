@@ -217,7 +217,7 @@
     width: 100%;
     margin-top: auto;
     padding-top: 20px;
-    padding-bottom: 12px;
+    padding-bottom: 48px;
   }
   .verdict-label-wrap {
     display: flex;
@@ -238,6 +238,10 @@
     color: rgba(255,255,255,0.82);
     line-height: 1.5; font-weight: 400;
     text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>
 </head>
