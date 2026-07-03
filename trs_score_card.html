@@ -20,12 +20,12 @@
   /* ── Color bleeds ── */
   .bleed-win {
     position: absolute; inset: 0;
-    background: linear-gradient(140deg, {{WIN_COLOR_RGBA_HIGH}} 0%, {{WIN_COLOR_RGBA_LOW}} 38%, transparent 60%);
+    background: linear-gradient(140deg, {{WIN_COLOR_RGBA_HIGH}} 0%, {{WIN_COLOR_RGBA_LOW}} 42%, transparent 65%);
     z-index: 0;
   }
   .bleed-lose {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 90% 95%, {{LOSE_COLOR_RGBA}} 0%, transparent 52%);
+    background: radial-gradient(ellipse at 92% 92%, {{LOSE_COLOR_RGBA}} 0%, transparent 50%);
     z-index: 0;
   }
 
@@ -45,7 +45,6 @@
     white-space: nowrap;
   }
 
-  /* ── Match context — centered between left and right eyebrows ── */
   .eyebrow-center {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 30px;
@@ -66,19 +65,23 @@
     text-align: right;
   }
 
-  /* ── Footer ── */
+  /* ── Footer — platform handles ── */
   .footer {
     position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-    padding: 18px 48px;
+    padding: 16px 48px;
     display: flex; justify-content: center; align-items: center;
+    gap: 28px;
   }
-  .footer-text {
+  .handle {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 9px;
-    color: rgba(255,255,255,0.18);
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.22);
   }
-  .footer-dot { color: #AAFF00; margin: 0 14px; }
+  .handle-dot {
+    font-size: 18px;
+    color: rgba(170,255,0,0.4);
+  }
 
   /* ── Main content column ── */
   .content {
@@ -87,28 +90,28 @@
     left: 0; right: 0;
     z-index: 2;
     display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    align-items: center;
     padding: 0 52px;
-    gap: 0;
   }
 
   /* ── Score section ── */
   .score-section {
     width: 100%;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 12px;
+    margin-top: 24px;
+    margin-bottom: 8px;
   }
 
-  .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
   .crest {
-    width: 140px; height: 140px;
+    width: 136px; height: 136px;
     border-radius: 50%;
     background: rgba(255,255,255,0.06);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
   }
-  .crest img { width: 106px; height: 106px; object-fit: contain; }
+  .crest img { width: 104px; height: 104px; object-fit: contain; }
 
   .team-code {
     font-family: 'Bebas Neue', sans-serif;
@@ -116,23 +119,23 @@
     text-align: center; line-height: 1;
   }
   .team-code.winner { color: #ffffff; }
-  .team-code.loser  { color: rgba(255,255,255,0.4); }
+  .team-code.loser  { color: rgba(255,255,255,0.38); }
 
+  /* Only show team name when it differs meaningfully from the code */
   .team-name {
-    font-size: 24px; font-weight: 500;
-    color: rgba(255,255,255,0.32);
-    letter-spacing: 4px; text-transform: uppercase;
+    font-size: 22px; font-weight: 500;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 3px; text-transform: uppercase;
     text-align: center;
     max-width: 220px;
     line-height: 1.3;
-    /* Truncate very long names to single line */
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 
-  .score-center { display: flex; align-items: center; padding: 0 16px; }
+  .score-center { display: flex; align-items: center; padding: 0 12px; }
 
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
@@ -140,29 +143,28 @@
     min-width: 140px; text-align: center;
   }
   .score-num.winner { color: #AAFF00; }
-  .score-num.loser  { color: rgba(255,255,255,0.38); }
+  .score-num.loser  { color: rgba(255,255,255,0.32); }
 
   .score-sep {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 160px; line-height: 1;
-    color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.18);
     padding: 0 4px;
   }
 
-  /* ── Winner badge — tight below score ── */
+  /* ── Winner badge ── */
   .winner-badge {
     background: #AAFF00; color: #080906;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px; letter-spacing: 7px;
-    padding: 7px 40px; border-radius: 4px;
-    margin-top: 0;
-    margin-bottom: 18px;
+    padding: 10px 44px; border-radius: 4px;
+    margin-bottom: 16px;
   }
 
   /* ── Goal scorers ── */
   .goals {
     width: 100%; display: flex; justify-content: space-between;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     min-height: 0;
   }
   .goals-col { flex: 1; display: flex; flex-direction: column; gap: 6px; }
@@ -171,13 +173,13 @@
 
   .goal-line {
     font-size: 26px; font-weight: 400;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.58);
     line-height: 1.4;
   }
   .goal-min { color: #AAFF00; font-weight: 700; }
 
   /* ── Stats ── */
-  .stats { width: 100%; display: flex; flex-direction: column; gap: 18px; margin-bottom: 22px; }
+  .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
 
   .stat-row { display: flex; flex-direction: column; gap: 7px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
@@ -189,8 +191,8 @@
   .stat-val.right { text-align: right; }
 
   .stat-name {
-    font-size: 22px; font-weight: 600;
-    color: rgba(255,255,255,0.28);
+    font-size: 21px; font-weight: 600;
+    color: rgba(255,255,255,0.26);
     letter-spacing: 4px; text-transform: uppercase;
     text-align: center;
   }
@@ -206,28 +208,29 @@
     border-radius: 4px 0 0 4px;
   }
   .bar-away {
-    height: 100%; background: rgba(180,30,20,0.65);
+    height: 100%; background: rgba(160,30,20,0.55);
     border-radius: 0 4px 4px 0;
   }
 
-  /* ── Verdict — no full-width divider, underline on label only ── */
+  /* ── Verdict — pushed lower with breathing room ── */
   .verdict {
     width: 100%;
-    padding-top: 0;
-    padding-bottom: 50px;
+    margin-top: auto;
+    padding-top: 20px;
+    padding-bottom: 12px;
   }
   .verdict-label-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 30px; letter-spacing: 7px;
     color: #AAFF00;
     padding-bottom: 8px;
-    border-bottom: 2px solid rgba(170,255,0,0.5);
+    border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
   .verdict-text {
@@ -240,21 +243,19 @@
 </head>
 <body>
 
-  <!-- Color bleeds -->
   <div class="bleed-win"></div>
   <div class="bleed-lose"></div>
 
-  <!-- Eyebrow bar — TRS | MATCH CONTEXT | FIFA WC 2026 -->
+  <!-- Eyebrow — TRS | Stage | FIFA WC 2026 -->
   <div class="topbar">
     <div class="eyebrow-left">THIRD RAIL SPORTS</div>
     <div class="eyebrow-center">{{MATCH_CONTEXT}}</div>
     <div class="eyebrow-right">FIFA WORLD CUP 2026</div>
   </div>
 
-  <!-- Main centered content -->
+  <!-- Main content -->
   <div class="content">
 
-    <!-- Score -->
     <div class="score-section">
       <div class="team">
         <div class="crest"><img src="{{HOME_CREST}}" alt="{{HOME_CODE}}"></div>
@@ -273,16 +274,13 @@
       </div>
     </div>
 
-    <!-- Winner badge — sits tight below score -->
     <div class="winner-badge">{{WINNER_LABEL}}</div>
 
-    <!-- Goal scorers -->
     <div class="goals">
       <div class="goals-col left">{{GOALS_HOME_HTML}}</div>
       <div class="goals-col right">{{GOALS_AWAY_HTML}}</div>
     </div>
 
-    <!-- Stats -->
     <div class="stats">
       <div class="stat-row">
         <div class="stat-labels">
@@ -319,7 +317,7 @@
       </div>
     </div>
 
-    <!-- TRS Verdict -->
+    <!-- Verdict pushed to bottom via margin-top: auto -->
     <div class="verdict">
       <div class="verdict-label-wrap">
         <span class="verdict-label">TRS VERDICT</span>
@@ -329,9 +327,19 @@
 
   </div>
 
-  <!-- Footer -->
+  <!-- Footer — platform handles -->
   <div class="footer">
-    <span class="footer-text">@THIRDRAILSPORTS<span class="footer-dot">·</span>SPORT. DECODED.</span>
+    <span class="handle">FB</span>
+    <span class="handle-dot">·</span>
+    <span class="handle">IG</span>
+    <span class="handle-dot">·</span>
+    <span class="handle">YT</span>
+    <span class="handle-dot">·</span>
+    <span class="handle">THREADS</span>
+    <span class="handle-dot">·</span>
+    <span class="handle">TIKTOK</span>
+    <span class="handle-dot">·</span>
+    <span class="handle">X</span>
   </div>
 
 </body>
