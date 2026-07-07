@@ -45,9 +45,10 @@
     white-space: nowrap;
   }
 
+  /* FONT UPDATE: 30px -> 38px, matches eyebrow-left */
   .eyebrow-center {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
+    font-size: 38px;
     color: rgba(255,255,255,0.45);
     letter-spacing: 4px;
     white-space: nowrap;
@@ -56,9 +57,10 @@
     padding: 0 20px;
   }
 
+  /* FONT UPDATE: 30px -> 38px, matches eyebrow-left */
   .eyebrow-right {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
+    font-size: 38px;
     color: rgba(255,255,255,0.4);
     letter-spacing: 3px;
     white-space: nowrap;
@@ -74,12 +76,12 @@
   }
   .handle {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
-    letter-spacing: 4px;
+    font-size: 26px;
+    letter-spacing: 3px;
     color: #AAFF00;
   }
   .handle-dot {
-    font-size: 20px;
+    font-size: 18px;
     color: rgba(170,255,0,0.5);
   }
 
@@ -113,17 +115,18 @@
   }
   .crest img { width: 104px; height: 104px; object-fit: contain; }
 
+  /* FONT UPDATE: 96px -> 116px */
   .team-code {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 96px; letter-spacing: 8px;
+    font-size: 116px; letter-spacing: 8px;
     text-align: center; line-height: 1;
   }
   .team-code.winner { color: #ffffff; }
   .team-code.loser  { color: rgba(255,255,255,0.38); }
 
-  /* Only show team name when it differs meaningfully from the code */
+  /* FONT UPDATE: 22px -> 24px */
   .team-name {
-    font-size: 22px; font-weight: 500;
+    font-size: 24px; font-weight: 500;
     color: rgba(255,255,255,0.28);
     letter-spacing: 3px; text-transform: uppercase;
     text-align: center;
@@ -137,17 +140,19 @@
 
   .score-center { display: flex; align-items: center; padding: 0 12px; }
 
+  /* FONT UPDATE: 260px -> 300px */
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 260px; line-height: 1;
+    font-size: 300px; line-height: 1;
     min-width: 140px; text-align: center;
   }
   .score-num.winner { color: #AAFF00; }
   .score-num.loser  { color: rgba(255,255,255,0.32); }
 
+  /* FONT UPDATE: 160px -> 180px, kept proportional to score-num */
   .score-sep {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 160px; line-height: 1;
+    font-size: 180px; line-height: 1;
     color: rgba(255,255,255,0.18);
     padding: 0 4px;
   }
@@ -190,8 +195,10 @@
   }
   .stat-val.right { text-align: right; }
 
+  /* FONT UPDATE: 21px -> 27px -- kept below stat-val (38px) on purpose, preserves
+     number-leads/label-supports hierarchy rather than making them equal weight */
   .stat-name {
-    font-size: 21px; font-weight: 600;
+    font-size: 27px; font-weight: 600;
     color: rgba(255,255,255,0.26);
     letter-spacing: 4px; text-transform: uppercase;
     text-align: center;
@@ -225,16 +232,19 @@
     align-items: center;
     margin-bottom: 16px;
   }
+  /* FONT UPDATE: 30px -> 34px */
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px; letter-spacing: 7px;
+    font-size: 34px; letter-spacing: 7px;
     color: #AAFF00;
     padding-bottom: 8px;
     border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
+  /* FONT UPDATE: 36px -> 40px -- paired with a tightened word ceiling (18 words)
+     in Generate Verdict's prompt so the 3-line clamp never silently truncates */
   .verdict-text {
-    font-size: 36px;
+    font-size: 40px;
     color: rgba(255,255,255,0.82);
     line-height: 1.5; font-weight: 400;
     text-align: center;
