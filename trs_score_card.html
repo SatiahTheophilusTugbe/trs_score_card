@@ -57,6 +57,8 @@
   .handle { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; color: #AAFF00; }
   .handle-dot { font-size: 18px; color: rgba(170,255,0,0.5); }
 
+  /* SAFETY NET: if content ever runs longer than expected despite the 3-goal
+     cap below, it clips silently instead of visibly colliding with the footer */
   .content {
     position: absolute;
     top: 100px; bottom: 70px;
@@ -65,14 +67,14 @@
     display: flex; flex-direction: column;
     align-items: center;
     padding: 0 52px;
+    overflow: hidden;
   }
 
-  /* ── Score section — now includes each team's scorers stacked beneath its name ── */
   .score-section {
     width: 100%;
     display: flex; align-items: flex-start; justify-content: center;
-    margin-top: 24px;
-    margin-bottom: 20px;
+    margin-top: 12px;
+    margin-bottom: 14px;
   }
 
   .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -104,25 +106,27 @@
     -webkit-box-orient: vertical;
   }
 
-  /* NEW: scorers now live directly under each team's own name, stacked and
-     centered -- narrow column, not a wide two-side row. */
+  /* Scorers stacked under each team's own name -- text stays restrained (23px)
+     while the photo is the element that "pops" (46px), by design */
   .team-scorers {
     margin-top: 10px;
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    max-width: 220px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    max-width: 260px;
   }
   .goal-line {
-    font-size: 18px; font-weight: 400;
-    color: rgba(255,255,255,0.58);
+    font-size: 23px; font-weight: 400;
+    color: rgba(255,255,255,0.65);
     line-height: 1.3;
-    display: flex; align-items: center; gap: 4px;
+    display: flex; align-items: center; gap: 10px;
   }
+  .goal-line.goal-more { color: rgba(255,255,255,0.4); font-size: 19px; }
   .goal-min { color: #AAFF00; font-weight: 700; }
   .scorer-photo {
-    width: 24px; height: 24px;
+    width: 46px; height: 46px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(170,255,0,0.4);
+    border: 3px solid rgba(170,255,0,0.65);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
     display: inline-block;
     flex-shrink: 0;
   }
@@ -150,26 +154,22 @@
     margin-bottom: 20px;
   }
 
-  /* NEW: Star of the Match -- now a featured, centered callout directly under
-     the winner badge, not a footnote under the verdict. Given more presence
-     to match its new position. */
   .star-of-match {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    margin-bottom: 32px;
-    font-size: 24px;
-    color: rgba(255,255,255,0.75);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 28px;
+    font-size: 28px;
+    color: rgba(255,255,255,0.8);
     font-family: 'Inter', sans-serif;
   }
   .star-photo {
-    width: 44px; height: 44px; border-radius: 50%;
+    width: 56px; height: 56px; border-radius: 50%;
     object-fit: cover; border: 2px solid #AAFF00;
     display: inline-block; flex-shrink: 0;
   }
-  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 19px; text-transform: uppercase; }
+  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 21px; text-transform: uppercase; }
   .star-name  { color: #fff; font-weight: 600; }
   .star-rating{ color: #AAFF00; font-weight: 700; }
 
-  /* ── Stats — sized down to reduce clutter, still above original baseline ── */
   .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
   .stat-row { display: flex; flex-direction: column; gap: 7px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
@@ -191,7 +191,6 @@
   .bar-home { height: 100%; background: #AAFF00; border-radius: 4px 0 0 4px; }
   .bar-away { height: 100%; background: rgba(160,30,20,0.55); border-radius: 0 4px 4px 0; }
 
-  /* ── Verdict — sized down to reduce clutter, still above original baseline ── */
   .verdict {
     width: 100%;
     margin-top: auto;
