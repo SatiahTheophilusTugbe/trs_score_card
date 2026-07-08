@@ -17,7 +17,6 @@
     position: relative;
   }
 
-  /* ── Color bleeds ── */
   .bleed-win {
     position: absolute; inset: 0;
     background: linear-gradient(140deg, {{WIN_COLOR_RGBA_HIGH}} 0%, {{WIN_COLOR_RGBA_LOW}} 42%, transparent 65%);
@@ -29,61 +28,35 @@
     z-index: 0;
   }
 
-  /* ── Top eyebrow bar ── */
   .topbar {
     position: absolute; top: 0; left: 0; right: 0;
     z-index: 3;
     display: flex; justify-content: space-between; align-items: center;
     padding: 36px 48px 0;
   }
-
   .eyebrow-left {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: #AAFF00;
-    letter-spacing: 5px;
-    white-space: nowrap;
+    font-family: 'Bebas Neue', sans-serif; font-size: 38px;
+    color: #AAFF00; letter-spacing: 5px; white-space: nowrap;
   }
-
   .eyebrow-center {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 4px;
-    white-space: nowrap;
-    text-align: center;
-    flex: 1;
-    padding: 0 20px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 38px;
+    color: rgba(255,255,255,0.45); letter-spacing: 4px;
+    white-space: nowrap; text-align: center; flex: 1; padding: 0 20px;
   }
-
   .eyebrow-right {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 3px;
-    white-space: nowrap;
-    text-align: right;
+    font-family: 'Bebas Neue', sans-serif; font-size: 38px;
+    color: rgba(255,255,255,0.4); letter-spacing: 3px;
+    white-space: nowrap; text-align: right;
   }
 
-  /* ── Footer — platform handles ── */
   .footer {
     position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
     padding: 16px 48px;
-    display: flex; justify-content: center; align-items: center;
-    gap: 28px;
+    display: flex; justify-content: center; align-items: center; gap: 28px;
   }
-  .handle {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 3px;
-    color: #AAFF00;
-  }
-  .handle-dot {
-    font-size: 18px;
-    color: rgba(170,255,0,0.5);
-  }
+  .handle { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; color: #AAFF00; }
+  .handle-dot { font-size: 18px; color: rgba(170,255,0,0.5); }
 
-  /* ── Main content column ── */
   .content {
     position: absolute;
     top: 100px; bottom: 70px;
@@ -94,19 +67,18 @@
     padding: 0 52px;
   }
 
-  /* ── Score section ── */
+  /* ── Score section — now includes each team's scorers stacked beneath its name ── */
   .score-section {
     width: 100%;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; align-items: flex-start; justify-content: center;
     margin-top: 24px;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 
   .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
   .crest {
-    width: 136px; height: 136px;
-    border-radius: 50%;
+    width: 136px; height: 136px; border-radius: 50%;
     background: rgba(255,255,255,0.06);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
@@ -125,17 +97,37 @@
     font-size: 24px; font-weight: 500;
     color: rgba(255,255,255,0.28);
     letter-spacing: 3px; text-transform: uppercase;
-    text-align: center;
-    max-width: 220px;
-    line-height: 1.3;
+    text-align: center; max-width: 220px; line-height: 1.3;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 
-  .score-center { display: flex; align-items: center; padding: 0 12px; }
+  /* NEW: scorers now live directly under each team's own name, stacked and
+     centered -- narrow column, not a wide two-side row. */
+  .team-scorers {
+    margin-top: 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    max-width: 220px;
+  }
+  .goal-line {
+    font-size: 18px; font-weight: 400;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.3;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .goal-min { color: #AAFF00; font-weight: 700; }
+  .scorer-photo {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(170,255,0,0.4);
+    display: inline-block;
+    flex-shrink: 0;
+  }
 
+  .score-center { display: flex; align-items: center; padding: 0 12px; margin-top: 4px; }
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 300px; line-height: 1;
@@ -143,7 +135,6 @@
   }
   .score-num.winner { color: #AAFF00; }
   .score-num.loser  { color: rgba(255,255,255,0.32); }
-
   .score-sep {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 180px; line-height: 1;
@@ -151,107 +142,75 @@
     padding: 0 4px;
   }
 
-  /* ── Winner badge ── */
   .winner-badge {
     background: #AAFF00; color: #080906;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px; letter-spacing: 7px;
     padding: 10px 44px; border-radius: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 
-  /* ── Goal scorers ── */
-  .goals {
-    width: 100%; display: flex; justify-content: space-between;
-    margin-bottom: 14px;
-    min-height: 0;
+  /* NEW: Star of the Match -- now a featured, centered callout directly under
+     the winner badge, not a footnote under the verdict. Given more presence
+     to match its new position. */
+  .star-of-match {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 32px;
+    font-size: 24px;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Inter', sans-serif;
   }
-  .goals-col { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-  .goals-col.left  { align-items: flex-start; }
-  .goals-col.right { align-items: flex-end; }
-
-  /* FIX: goal-line now a flex row so an inline scorer photo sits cleanly beside
-     the text instead of rendering at raw/unconstrained size */
-  .goal-line {
-    font-size: 26px; font-weight: 400;
-    color: rgba(255,255,255,0.58);
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
+  .star-photo {
+    width: 44px; height: 44px; border-radius: 50%;
+    object-fit: cover; border: 2px solid #AAFF00;
+    display: inline-block; flex-shrink: 0;
   }
-  .goal-min { color: #AAFF00; font-weight: 700; }
+  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 19px; text-transform: uppercase; }
+  .star-name  { color: #fff; font-weight: 600; }
+  .star-rating{ color: #AAFF00; font-weight: 700; }
 
-  /* NEW: scorer photo -- small circular headshot, inline with the goal line.
-     This class was referenced by Prepare Variables' output HTML but never
-     defined -- this is the fix for the oversized/unstyled photo bug. */
-  .scorer-photo {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-    margin: 0 8px;
-    border: 2px solid rgba(170,255,0,0.4);
-    display: inline-block;
-    flex-shrink: 0;
-  }
-
-  /* ── Stats ── */
+  /* ── Stats — sized down to reduce clutter, still above original baseline ── */
   .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
-
   .stat-row { display: flex; flex-direction: column; gap: 7px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
-
   .stat-val {
-    font-size: 38px; font-weight: 700;
+    font-size: 32px; font-weight: 700;
     color: #fff; min-width: 68px;
   }
   .stat-val.right { text-align: right; }
-
   .stat-name {
-    font-size: 27px; font-weight: 600;
+    font-size: 22px; font-weight: 600;
     color: rgba(255,255,255,0.26);
     letter-spacing: 4px; text-transform: uppercase;
     text-align: center;
   }
-
   .bar-track {
-    height: 7px;
-    background: rgba(255,255,255,0.07);
-    border-radius: 4px;
-    display: flex; overflow: hidden;
+    height: 7px; background: rgba(255,255,255,0.07);
+    border-radius: 4px; display: flex; overflow: hidden;
   }
-  .bar-home {
-    height: 100%; background: #AAFF00;
-    border-radius: 4px 0 0 4px;
-  }
-  .bar-away {
-    height: 100%; background: rgba(160,30,20,0.55);
-    border-radius: 0 4px 4px 0;
-  }
+  .bar-home { height: 100%; background: #AAFF00; border-radius: 4px 0 0 4px; }
+  .bar-away { height: 100%; background: rgba(160,30,20,0.55); border-radius: 0 4px 4px 0; }
 
-  /* ── Verdict ── */
+  /* ── Verdict — sized down to reduce clutter, still above original baseline ── */
   .verdict {
     width: 100%;
     margin-top: auto;
     padding-top: 20px;
-    padding-bottom: 24px;
+    padding-bottom: 40px;
   }
   .verdict-label-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 16px;
+    display: flex; flex-direction: column; align-items: center; margin-bottom: 16px;
   }
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 34px; letter-spacing: 7px;
+    font-size: 28px; letter-spacing: 7px;
     color: #AAFF00;
     padding-bottom: 8px;
     border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
   .verdict-text {
-    font-size: 40px;
+    font-size: 34px;
     color: rgba(255,255,255,0.82);
     line-height: 1.5; font-weight: 400;
     text-align: center;
@@ -260,33 +219,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
-  /* NEW: Star of the Match -- compact single line, deliberately minimal so it
-     doesn't compete with the verdict or the score for visual weight. The
-     {{STAR_OF_MATCH_HTML}} placeholder this styles was previously missing
-     from the template body entirely -- added below along with this CSS. */
-  .star-of-match {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-    font-size: 22px;
-    color: rgba(255,255,255,0.7);
-    font-family: 'Inter', sans-serif;
-  }
-  .star-photo {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-    border: 2px solid #AAFF00;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 18px; text-transform: uppercase; }
-  .star-name  { color: #fff; font-weight: 600; }
-  .star-rating{ color: #AAFF00; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -294,14 +226,12 @@
   <div class="bleed-win"></div>
   <div class="bleed-lose"></div>
 
-  <!-- Eyebrow — TRS | Stage | FIFA WC 2026 -->
   <div class="topbar">
     <div class="eyebrow-left">THIRD RAIL SPORTS</div>
     <div class="eyebrow-center">{{MATCH_CONTEXT}}</div>
     <div class="eyebrow-right">FIFA WORLD CUP 2026</div>
   </div>
 
-  <!-- Main content -->
   <div class="content">
 
     <div class="score-section">
@@ -309,6 +239,7 @@
         <div class="crest"><img src="{{HOME_CREST}}" alt="{{HOME_CODE}}"></div>
         <div class="team-code {{HOME_WIN_CLASS}}">{{HOME_CODE}}</div>
         <div class="team-name">{{HOME_TEAM}}</div>
+        <div class="team-scorers">{{GOALS_HOME_HTML}}</div>
       </div>
       <div class="score-center">
         <div class="score-num {{HOME_SCORE_CLASS}}">{{HOME_SCORE}}</div>
@@ -319,15 +250,13 @@
         <div class="crest"><img src="{{AWAY_CREST}}" alt="{{AWAY_CODE}}"></div>
         <div class="team-code {{AWAY_WIN_CLASS}}">{{AWAY_CODE}}</div>
         <div class="team-name">{{AWAY_TEAM}}</div>
+        <div class="team-scorers">{{GOALS_AWAY_HTML}}</div>
       </div>
     </div>
 
     <div class="winner-badge">{{WINNER_LABEL}}</div>
 
-    <div class="goals">
-      <div class="goals-col left">{{GOALS_HOME_HTML}}</div>
-      <div class="goals-col right">{{GOALS_AWAY_HTML}}</div>
-    </div>
+    {{STAR_OF_MATCH_HTML}}
 
     <div class="stats">
       <div class="stat-row">
@@ -365,29 +294,21 @@
       </div>
     </div>
 
-    <!-- Verdict pushed to bottom via margin-top: auto -->
     <div class="verdict">
       <div class="verdict-label-wrap">
         <span class="verdict-label">TRS VERDICT</span>
       </div>
       <div class="verdict-text">{{VERDICT}}</div>
-      {{STAR_OF_MATCH_HTML}}
     </div>
 
   </div>
 
-  <!-- Footer — platform handles -->
   <div class="footer">
-    <span class="handle">FB</span>
-    <span class="handle-dot">·</span>
-    <span class="handle">IG</span>
-    <span class="handle-dot">·</span>
-    <span class="handle">YT</span>
-    <span class="handle-dot">·</span>
-    <span class="handle">THREADS</span>
-    <span class="handle-dot">·</span>
-    <span class="handle">TIKTOK</span>
-    <span class="handle-dot">·</span>
+    <span class="handle">FB</span><span class="handle-dot">·</span>
+    <span class="handle">IG</span><span class="handle-dot">·</span>
+    <span class="handle">YT</span><span class="handle-dot">·</span>
+    <span class="handle">THREADS</span><span class="handle-dot">·</span>
+    <span class="handle">TIKTOK</span><span class="handle-dot">·</span>
     <span class="handle">X</span>
   </div>
 
