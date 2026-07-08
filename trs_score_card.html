@@ -74,7 +74,7 @@
     width: 100%;
     display: flex; align-items: flex-start; justify-content: center;
     margin-top: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -134,24 +134,30 @@
     white-space: nowrap;
   }
 
-  /* ---------- SCORER STRIP ---------- */
-  .scorer-strip {
+  /* ---------- SCORER BAND: home left · winner badge center · away right ----------
+     Both sides flex:1 so the badge stays truly centered; scorers anchor
+     outward under their own team and grow toward the middle. */
+  .scorer-band {
     width: 100%;
-    display: flex; justify-content: center; align-items: flex-start;
-    gap: 56px;
-    margin-top: 2px;
-    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    min-height: 110px;
   }
   .strip-side {
+    flex: 1;
     display: flex; flex-direction: row; flex-wrap: wrap;
-    justify-content: center; align-items: flex-start;
-    gap: 10px 22px;
-    max-width: 440px;
+    align-items: flex-start;
+    gap: 10px 20px;
   }
+  .strip-side.home { justify-content: flex-start; }
+  .strip-side.away { justify-content: flex-end; }
+
   .scorer-card {
     display: flex; flex-direction: column; align-items: center;
     gap: 4px;
-    min-width: 96px; max-width: 150px;
+    min-width: 92px; max-width: 145px;
   }
   .scorer-photo {
     width: 56px; height: 56px;
@@ -175,7 +181,7 @@
     font-size: 19px; font-weight: 600;
     color: rgba(255,255,255,0.85);
     text-align: center; line-height: 1.15;
-    max-width: 150px; white-space: nowrap;
+    max-width: 145px; white-space: nowrap;
     overflow: hidden; text-overflow: ellipsis;
   }
   .scorer-mins {
@@ -199,35 +205,35 @@
   .strip-side.away .scorer-more { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.6); }
 
   /* Density step-down: applied by Prepare Variables when total cards > 4 */
-  .scorer-strip.compact { gap: 40px; }
-  .scorer-strip.compact .strip-side { gap: 8px 16px; }
-  .scorer-strip.compact .scorer-card { min-width: 82px; max-width: 128px; gap: 3px; }
-  .scorer-strip.compact .scorer-photo,
-  .scorer-strip.compact .scorer-photo-fallback,
-  .scorer-strip.compact .scorer-more { width: 48px; height: 48px; }
-  .scorer-strip.compact .scorer-photo-fallback { font-size: 22px; }
-  .scorer-strip.compact .scorer-more { font-size: 21px; }
-  .scorer-strip.compact .scorer-name { font-size: 17px; max-width: 128px; }
-  .scorer-strip.compact .scorer-mins { font-size: 18px; }
+  .scorer-band.compact .strip-side { gap: 8px 14px; }
+  .scorer-band.compact .scorer-card { min-width: 80px; max-width: 122px; gap: 3px; }
+  .scorer-band.compact .scorer-photo,
+  .scorer-band.compact .scorer-photo-fallback,
+  .scorer-band.compact .scorer-more { width: 48px; height: 48px; }
+  .scorer-band.compact .scorer-photo-fallback { font-size: 22px; }
+  .scorer-band.compact .scorer-more { font-size: 21px; }
+  .scorer-band.compact .scorer-name { font-size: 17px; max-width: 122px; }
+  .scorer-band.compact .scorer-mins { font-size: 18px; }
 
   .winner-badge {
+    flex-shrink: 0;
     background: #AAFF00; color: #080906;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px; letter-spacing: 7px;
     padding: 10px 44px; border-radius: 4px;
-    margin-bottom: 10px;
+    white-space: nowrap;
   }
 
-  /* ---------- STAR OF THE MATCH ---------- */
+  /* ---------- STAR OF THE MATCH: centered directly under the band ---------- */
   .star-of-match {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 26px;
     font-size: 24px;
     color: rgba(255,255,255,0.8);
     font-family: 'Inter', sans-serif;
   }
   .star-photo {
-    width: 42px; height: 42px; border-radius: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
     object-fit: cover; border: 2px solid #AAFF00;
     display: inline-block; flex-shrink: 0;
   }
@@ -235,17 +241,17 @@
   .star-name  { color: #fff; font-weight: 600; }
   .star-rating{ color: #AAFF00; font-weight: 700; }
 
-  /* ---------- STATS ---------- */
-  .stats { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 0; }
-  .stat-row { display: flex; flex-direction: column; gap: 6px; }
+  /* ---------- STATS: decompressed ---------- */
+  .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
+  .stat-row { display: flex; flex-direction: column; gap: 7px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
   .stat-val {
-    font-size: 26px; font-weight: 700;
-    color: #fff; min-width: 60px;
+    font-size: 27px; font-weight: 700;
+    color: #fff; min-width: 62px;
   }
   .stat-val.right { text-align: right; }
   .stat-name {
-    font-size: 18px; font-weight: 600;
+    font-size: 19px; font-weight: 600;
     color: rgba(255,255,255,0.26);
     letter-spacing: 3px; text-transform: uppercase;
     text-align: center;
@@ -257,28 +263,28 @@
   .bar-home { height: 100%; background: #AAFF00; border-radius: 4px 0 0 4px; }
   .bar-away { height: 100%; background: rgba(160,30,20,0.55); border-radius: 0 4px 4px 0; }
 
-  /* ---------- VERDICT ---------- */
+  /* ---------- VERDICT: decompressed ---------- */
   .verdict {
     width: 100%;
     margin-top: auto;
-    padding-top: 12px;
-    padding-bottom: 20px;
+    padding-top: 22px;
+    padding-bottom: 26px;
   }
   .verdict-label-wrap {
-    display: flex; flex-direction: column; align-items: center; margin-bottom: 10px;
+    display: flex; flex-direction: column; align-items: center; margin-bottom: 12px;
   }
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px; letter-spacing: 6px;
+    font-size: 25px; letter-spacing: 6px;
     color: #AAFF00;
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
   .verdict-text {
-    font-size: 26px;
+    font-size: 27px;
     color: rgba(255,255,255,0.82);
-    line-height: 1.35; font-weight: 400;
+    line-height: 1.4; font-weight: 400;
     text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -321,12 +327,11 @@
       </div>
     </div>
 
-    <div class="scorer-strip {{STRIP_DENSITY}}">
+    <div class="scorer-band {{STRIP_DENSITY}}">
       <div class="strip-side home">{{GOALS_HOME_HTML}}</div>
+      <div class="winner-badge">{{WINNER_LABEL}}</div>
       <div class="strip-side away">{{GOALS_AWAY_HTML}}</div>
     </div>
-
-    <div class="winner-badge">{{WINNER_LABEL}}</div>
 
     {{STAR_OF_MATCH_HTML}}
 
