@@ -57,8 +57,8 @@
   .handle { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; color: #AAFF00; }
   .handle-dot { font-size: 18px; color: rgba(170,255,0,0.5); }
 
-  /* SAFETY NET: if content ever runs longer than expected despite the 3-goal
-     cap below, it clips silently instead of visibly colliding with the footer */
+  /* SAFETY NET: if content ever runs longer than expected despite the
+     scorer-unit cap, it clips silently instead of colliding with the footer */
   .content {
     position: absolute;
     top: 100px; bottom: 70px;
@@ -70,11 +70,12 @@
     overflow: hidden;
   }
 
+  /* ---------- SCORE SECTION (clean base: crest / code / name / scorers) ---------- */
   .score-section {
     width: 100%;
     display: flex; align-items: flex-start; justify-content: center;
-    margin-top: 12px;
-    margin-bottom: 14px;
+    margin-top: 28px;
+    margin-bottom: 12px;
   }
 
   .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -106,32 +107,65 @@
     -webkit-box-orient: vertical;
   }
 
-  /* Scorers stacked under each team's own name -- text stays restrained (23px)
-     while the photo is the element that "pops" (46px), by design */
+  /* ---------- SCORERS: horizontal wrap under each team ----------
+     One card per SCORER (goals grouped by player — a brace/hat-trick
+     is one photo with multiple minutes), flowing left-to-right,
+     wrapping and centering. Photo is the hero element (64px). */
   .team-scorers {
-    margin-top: 10px;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    max-width: 260px;
+    margin-top: 14px;
+    display: flex; flex-direction: row; flex-wrap: wrap;
+    justify-content: center; align-items: flex-start;
+    gap: 12px 20px;
+    max-width: 310px;
   }
-  .goal-line {
-    font-size: 23px; font-weight: 400;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.3;
-    display: flex; align-items: center; gap: 10px;
+  .scorer-card {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 5px;
+    width: 118px;
   }
-  .goal-line.goal-more { color: rgba(255,255,255,0.4); font-size: 19px; }
-  .goal-min { color: #AAFF00; font-weight: 700; }
   .scorer-photo {
-    width: 46px; height: 46px;
+    width: 64px; height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(170,255,0,0.65);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
-    display: inline-block;
-    flex-shrink: 0;
+    border: 3px solid rgba(170,255,0,0.7);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.06);
+    display: block;
+  }
+  .scorer-photo-fallback {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 3px solid rgba(170,255,0,0.4);
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px; color: rgba(255,255,255,0.6);
+  }
+  .scorer-name {
+    font-size: 19px; font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    text-align: center; line-height: 1.15;
+    max-width: 118px; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .scorer-mins {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px; letter-spacing: 2px;
+    color: #AAFF00; line-height: 1;
+    text-align: center;
+  }
+  .scorer-more {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 3px dashed rgba(170,255,0,0.45);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; color: rgba(170,255,0,0.8);
+    align-self: flex-start;
+    margin-top: 0;
   }
 
-  .score-center { display: flex; align-items: center; padding: 0 12px; margin-top: 4px; }
+  .score-center { display: flex; align-items: center; padding: 0 12px; margin-top: 30px; }
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 300px; line-height: 1;
@@ -151,67 +185,70 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px; letter-spacing: 7px;
     padding: 10px 44px; border-radius: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
   }
 
+  /* ---------- STAR OF THE MATCH: centered, directly under badge ---------- */
   .star-of-match {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin-bottom: 28px;
-    font-size: 28px;
+    margin-bottom: 22px;
+    font-size: 26px;
     color: rgba(255,255,255,0.8);
     font-family: 'Inter', sans-serif;
   }
   .star-photo {
-    width: 56px; height: 56px; border-radius: 50%;
+    width: 52px; height: 52px; border-radius: 50%;
     object-fit: cover; border: 2px solid #AAFF00;
     display: inline-block; flex-shrink: 0;
   }
-  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 21px; text-transform: uppercase; }
+  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 19px; text-transform: uppercase; }
   .star-name  { color: #fff; font-weight: 600; }
   .star-rating{ color: #AAFF00; font-weight: 700; }
 
-  .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
-  .stat-row { display: flex; flex-direction: column; gap: 7px; }
+  /* ---------- STATS: reduced pass (was 32/22/7px, gap 16) ---------- */
+  .stats { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 0; }
+  .stat-row { display: flex; flex-direction: column; gap: 6px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
   .stat-val {
-    font-size: 32px; font-weight: 700;
-    color: #fff; min-width: 68px;
+    font-size: 26px; font-weight: 700;
+    color: #fff; min-width: 60px;
   }
   .stat-val.right { text-align: right; }
   .stat-name {
-    font-size: 22px; font-weight: 600;
+    font-size: 18px; font-weight: 600;
     color: rgba(255,255,255,0.26);
-    letter-spacing: 4px; text-transform: uppercase;
+    letter-spacing: 3px; text-transform: uppercase;
     text-align: center;
   }
   .bar-track {
-    height: 7px; background: rgba(255,255,255,0.07);
+    height: 6px; background: rgba(255,255,255,0.07);
     border-radius: 4px; display: flex; overflow: hidden;
   }
   .bar-home { height: 100%; background: #AAFF00; border-radius: 4px 0 0 4px; }
   .bar-away { height: 100%; background: rgba(160,30,20,0.55); border-radius: 0 4px 4px 0; }
 
+  /* ---------- VERDICT: reduced pass (was 28/34px) ---------- */
   .verdict {
     width: 100%;
     margin-top: auto;
-    padding-top: 20px;
-    padding-bottom: 40px;
+    padding-top: 16px;
+    padding-bottom: 30px;
   }
   .verdict-label-wrap {
-    display: flex; flex-direction: column; align-items: center; margin-bottom: 16px;
+    display: flex; flex-direction: column; align-items: center; margin-bottom: 12px;
   }
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px; letter-spacing: 7px;
+    font-size: 24px; letter-spacing: 6px;
     color: #AAFF00;
-    padding-bottom: 8px;
+    padding-bottom: 7px;
     border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
   .verdict-text {
-    font-size: 34px;
+    font-size: 28px;
     color: rgba(255,255,255,0.82);
-    line-height: 1.5; font-weight: 400;
+    line-height: 1.45; font-weight: 400;
     text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 3;
