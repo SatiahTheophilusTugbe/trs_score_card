@@ -45,7 +45,6 @@
     white-space: nowrap;
   }
 
-  /* FONT UPDATE: 30px -> 38px, matches eyebrow-left */
   .eyebrow-center {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px;
@@ -57,7 +56,6 @@
     padding: 0 20px;
   }
 
-  /* FONT UPDATE: 30px -> 38px, matches eyebrow-left */
   .eyebrow-right {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 38px;
@@ -115,7 +113,6 @@
   }
   .crest img { width: 104px; height: 104px; object-fit: contain; }
 
-  /* FONT UPDATE: 96px -> 116px */
   .team-code {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 116px; letter-spacing: 8px;
@@ -124,7 +121,6 @@
   .team-code.winner { color: #ffffff; }
   .team-code.loser  { color: rgba(255,255,255,0.38); }
 
-  /* FONT UPDATE: 22px -> 24px */
   .team-name {
     font-size: 24px; font-weight: 500;
     color: rgba(255,255,255,0.28);
@@ -140,7 +136,6 @@
 
   .score-center { display: flex; align-items: center; padding: 0 12px; }
 
-  /* FONT UPDATE: 260px -> 300px */
   .score-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 300px; line-height: 1;
@@ -149,7 +144,6 @@
   .score-num.winner { color: #AAFF00; }
   .score-num.loser  { color: rgba(255,255,255,0.32); }
 
-  /* FONT UPDATE: 160px -> 180px, kept proportional to score-num */
   .score-sep {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 180px; line-height: 1;
@@ -176,12 +170,30 @@
   .goals-col.left  { align-items: flex-start; }
   .goals-col.right { align-items: flex-end; }
 
+  /* FIX: goal-line now a flex row so an inline scorer photo sits cleanly beside
+     the text instead of rendering at raw/unconstrained size */
   .goal-line {
     font-size: 26px; font-weight: 400;
     color: rgba(255,255,255,0.58);
     line-height: 1.4;
+    display: flex;
+    align-items: center;
   }
   .goal-min { color: #AAFF00; font-weight: 700; }
+
+  /* NEW: scorer photo -- small circular headshot, inline with the goal line.
+     This class was referenced by Prepare Variables' output HTML but never
+     defined -- this is the fix for the oversized/unstyled photo bug. */
+  .scorer-photo {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    margin: 0 8px;
+    border: 2px solid rgba(170,255,0,0.4);
+    display: inline-block;
+    flex-shrink: 0;
+  }
 
   /* ── Stats ── */
   .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
@@ -195,8 +207,6 @@
   }
   .stat-val.right { text-align: right; }
 
-  /* FONT UPDATE: 21px -> 27px -- kept below stat-val (38px) on purpose, preserves
-     number-leads/label-supports hierarchy rather than making them equal weight */
   .stat-name {
     font-size: 27px; font-weight: 600;
     color: rgba(255,255,255,0.26);
@@ -219,12 +229,12 @@
     border-radius: 0 4px 4px 0;
   }
 
-  /* ── Verdict — pushed lower with breathing room ── */
+  /* ── Verdict ── */
   .verdict {
     width: 100%;
     margin-top: auto;
     padding-top: 20px;
-    padding-bottom: 48px;
+    padding-bottom: 24px;
   }
   .verdict-label-wrap {
     display: flex;
@@ -232,7 +242,6 @@
     align-items: center;
     margin-bottom: 16px;
   }
-  /* FONT UPDATE: 30px -> 34px */
   .verdict-label {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 34px; letter-spacing: 7px;
@@ -241,8 +250,6 @@
     border-bottom: 2px solid rgba(170,255,0,0.45);
     display: inline-block;
   }
-  /* FONT UPDATE: 36px -> 40px -- paired with a tightened word ceiling (18 words)
-     in Generate Verdict's prompt so the 3-line clamp never silently truncates */
   .verdict-text {
     font-size: 40px;
     color: rgba(255,255,255,0.82);
@@ -253,6 +260,33 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* NEW: Star of the Match -- compact single line, deliberately minimal so it
+     doesn't compete with the verdict or the score for visual weight. The
+     {{STAR_OF_MATCH_HTML}} placeholder this styles was previously missing
+     from the template body entirely -- added below along with this CSS. */
+  .star-of-match {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 22px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Inter', sans-serif;
+  }
+  .star-photo {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    border: 2px solid #AAFF00;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .star-label { color: #AAFF00; font-weight: 700; letter-spacing: 2px; font-size: 18px; text-transform: uppercase; }
+  .star-name  { color: #fff; font-weight: 600; }
+  .star-rating{ color: #AAFF00; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -337,6 +371,7 @@
         <span class="verdict-label">TRS VERDICT</span>
       </div>
       <div class="verdict-text">{{VERDICT}}</div>
+      {{STAR_OF_MATCH_HTML}}
     </div>
 
   </div>
