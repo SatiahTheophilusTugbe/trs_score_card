@@ -74,7 +74,7 @@
     width: 100%;
     display: flex; align-items: flex-start; justify-content: center;
     margin-top: 16px;
-    margin-bottom: 6px;
+    margin-bottom: 0;
   }
 
   .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -135,13 +135,16 @@
   }
 
   /* ---------- SCORER BAND: home left · winner badge center · away right ----------
-     Both sides flex:1 so the badge stays truly centered; scorers anchor
-     outward under their own team and grow toward the middle. */
+     Negative top margin tucks the band into the score digits' built-in
+     glyph whitespace — this is the vertical reclaim that funds the
+     verdict's 4th line. Relative to the section's bottom edge, so a
+     rendered qualifier (AET/PENS) grows the section and the band
+     follows it down; they can never collide. */
   .scorer-band {
     width: 100%;
     display: flex; align-items: center; justify-content: space-between;
     gap: 24px;
-    margin-top: 12px;
+    margin-top: -8px;
     margin-bottom: 12px;
     min-height: 110px;
   }
@@ -204,7 +207,7 @@
   .strip-side.away .scorer-mins { color: rgba(255,255,255,0.7); }
   .strip-side.away .scorer-more { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.6); }
 
- /* Density step-down: fires when either side has 3+ cards or total > 4.
+  /* Density step-down: fires when either side has 3+ cards or total > 4.
      Sized so 3 cards + gaps fit the ~350px each side has beside the badge. */
   .scorer-band.compact .strip-side { gap: 8px 12px; }
   .scorer-band.compact .scorer-card { min-width: 72px; max-width: 106px; gap: 3px; }
@@ -228,7 +231,7 @@
   /* ---------- STAR OF THE MATCH: centered directly under the band ---------- */
   .star-of-match {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin-bottom: 26px;
+    margin-bottom: 20px;
     font-size: 24px;
     color: rgba(255,255,255,0.8);
     font-family: 'Inter', sans-serif;
@@ -242,7 +245,7 @@
   .star-name  { color: #fff; font-weight: 600; }
   .star-rating{ color: #AAFF00; font-weight: 700; }
 
-  /* ---------- STATS: decompressed ---------- */
+  /* ---------- STATS ---------- */
   .stats { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0; }
   .stat-row { display: flex; flex-direction: column; gap: 7px; }
   .stat-labels { display: flex; justify-content: space-between; align-items: center; }
@@ -264,12 +267,12 @@
   .bar-home { height: 100%; background: #AAFF00; border-radius: 4px 0 0 4px; }
   .bar-away { height: 100%; background: rgba(160,30,20,0.55); border-radius: 0 4px 4px 0; }
 
-  /* ---------- VERDICT: decompressed ---------- */
+  /* ---------- VERDICT: 4-line capacity ---------- */
   .verdict {
     width: 100%;
     margin-top: auto;
-    padding-top: 22px;
-    padding-bottom: 26px;
+    padding-top: 14px;
+    padding-bottom: 24px;
   }
   .verdict-label-wrap {
     display: flex; flex-direction: column; align-items: center; margin-bottom: 12px;
@@ -287,8 +290,9 @@
     color: rgba(255,255,255,0.82);
     line-height: 1.4; font-weight: 400;
     text-align: center;
+    min-height: 76px;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
