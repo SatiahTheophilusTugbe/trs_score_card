@@ -204,16 +204,17 @@
   .strip-side.away .scorer-mins { color: rgba(255,255,255,0.7); }
   .strip-side.away .scorer-more { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.6); }
 
-  /* Density step-down: applied by Prepare Variables when total cards > 4 */
-  .scorer-band.compact .strip-side { gap: 8px 14px; }
-  .scorer-band.compact .scorer-card { min-width: 80px; max-width: 122px; gap: 3px; }
+ /* Density step-down: fires when either side has 3+ cards or total > 4.
+     Sized so 3 cards + gaps fit the ~350px each side has beside the badge. */
+  .scorer-band.compact .strip-side { gap: 8px 12px; }
+  .scorer-band.compact .scorer-card { min-width: 72px; max-width: 106px; gap: 3px; }
   .scorer-band.compact .scorer-photo,
   .scorer-band.compact .scorer-photo-fallback,
-  .scorer-band.compact .scorer-more { width: 48px; height: 48px; }
-  .scorer-band.compact .scorer-photo-fallback { font-size: 22px; }
-  .scorer-band.compact .scorer-more { font-size: 21px; }
-  .scorer-band.compact .scorer-name { font-size: 17px; max-width: 122px; }
-  .scorer-band.compact .scorer-mins { font-size: 18px; }
+  .scorer-band.compact .scorer-more { width: 46px; height: 46px; }
+  .scorer-band.compact .scorer-photo-fallback { font-size: 21px; }
+  .scorer-band.compact .scorer-more { font-size: 20px; }
+  .scorer-band.compact .scorer-name { font-size: 16px; max-width: 106px; }
+  .scorer-band.compact .scorer-mins { font-size: 17px; }
 
   .winner-badge {
     flex-shrink: 0;
