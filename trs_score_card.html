@@ -118,10 +118,14 @@ TRS SCORE CARD — v12 design pass (Jul 10)
     -webkit-box-orient: vertical;
   }
 
-  /* Column so the qualifier line (AET / PENS) sits under the digits */
+  /* Column so the qualifier line (AET / PENS) sits under the digits.
+     position:relative makes this the anchor for the qualifier overlay below —
+     the qualifier is absolutely positioned so its presence/absence never
+     changes this box's flow height, which is what fed the verdict cutoff. */
   .score-center {
     display: flex; flex-direction: column; align-items: center;
     padding: 0 12px; margin-top: 30px;
+    position: relative;
   }
   .score-row { display: flex; align-items: center; }
   .score-num {
@@ -137,13 +141,21 @@ TRS SCORE CARD — v12 design pass (Jul 10)
     color: rgba(255,255,255,0.18);
     padding: 0 4px;
   }
-  /* AET / shootout qualifier — e.g. "4 – 2 PENS" or "AET" */
+  /* AET / shootout qualifier — e.g. "4 – 2 PENS" or "AET".
+     Absolutely positioned against .score-center: sits in the 300px digits'
+     built-in glyph whitespace instead of adding flow height. Regulation and
+     AET/PENS renders now produce identical total content height — the
+     qualifier can never push the verdict block toward the clip boundary,
+     regardless of qualifier length. */
   .score-qualifier {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 34px; letter-spacing: 6px;
     color: #AAFF00;
-    margin-top: 6px;
     white-space: nowrap;
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   /* ---------- SCORER BAND: home left · winner badge center · away right ----------
